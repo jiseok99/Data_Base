@@ -1,0 +1,188 @@
+drop table customer;
+drop table product;
+drop table ship_comp;
+drop table shipping_info;
+drop table manufacturer;
+drop table store;
+drop table warehouse;
+drop table sales_info;
+drop table purchase;
+
+create table customer(customer_ID INTEGER, account_num INTEGER, card_num INTEGER, card_type VARCHAR(15), primary key(customer_ID));
+
+create table product(product_ID INTEGER, package VARCHAR(15), price INTEGER, primary key(product_ID));
+
+create table ship_comp(comp_name VARCHAR(15), comp_phone VARCHAR(15), primary key(comp_name));
+
+create table shipping_info(tracking_num INTEGER, schdule_date DATE, arrival_date DATE, comp_name VARCHAR(15), customer_ID INTEGER, product_ID INTEGER, primary key(tracking_num), foreign key (customer_ID) references customer (customer_ID), foreign key (product_ID) references product (product_ID), foreign key (comp_name) references ship_comp (comp_name));
+
+create table manufacturer(M_ID INTEGER, name VARCHAR(15), primary key(M_ID));
+
+create table store(S_ID INTEGER, product_ID INTEGER, region VARCHAR(15), remain VARCHAR(15), M_ID INTEGER, primary key(S_ID, product_ID), foreign key (product_ID) references product (product_ID), foreign key (M_ID) references manufacturer (M_ID));
+
+create table warehouse(W_ID INTEGER, product_ID INTEGER, region VARCHAR(15), remain INTEGER, M_ID INTEGER, primary key(W_ID, product_ID), foreign key (product_ID) references product (product_ID), foreign key (M_ID) references manufacturer (M_ID));
+
+create table sales_info(date DATE, product_ID INTEGER, amount INTEGER, primary key(date, product_ID),  foreign key (product_ID) references product (product_ID));
+
+create table purchase(date DATE, customer_ID INTEGER, product_ID INTEGER, amount INTEGER, primary key(date, customer_ID, product_ID), foreign key (customer_ID) references customer (customer_ID), foreign key (product_ID) references product (product_ID));
+
+insert into customer values('601', '01100', '02100', 'credit');
+insert into customer values('602', '01101', '02101', 'credit');
+insert into customer values('603', '01102', '02102', 'credit');
+insert into customer values('604', '01103', '02103', 'credit');
+insert into customer values('605', '01104', '02104', 'credit');
+insert into customer values('606', '01105', '02105', 'credit');
+insert into customer values('607', '01106', '02106', 'credit');
+insert into customer values('608', '01107', '02107', 'credit');
+insert into customer values('609', '01108', '02108', 'credit');
+insert into customer values('610', '01109', '02109', 'credit');
+insert into customer values('611', '01110', '02110', 'credit');
+insert into customer values('612', '01111', '02111', 'credit');
+insert into customer values('613', '01112', '02112', 'credit');
+insert into customer values('614', '01113', '02113', 'credit');
+insert into customer values('615', '01114', '02114', 'credit');
+
+insert into product values('501', 'PC', '1000');
+insert into product values('502', 'mobile', '100');
+insert into product values('503', 'etc', '200');
+insert into product values('504', 'PC', '2000');
+insert into product values('505', 'labtop', '2000');
+insert into product values('506', 'labtop', '200');
+insert into product values('507', 'printer', '20');
+insert into product values('508', 'printer', '1000');
+insert into product values('509', 'tablet', '200');
+insert into product values('510', 'projector', '700');
+insert into product values('511', 'game_console', '100');
+insert into product values('512', 'game_console', '500');
+insert into product values('513', 'VR', '200');
+insert into product values('514', 'VR', '200');
+insert into product values('515', 'Router', '200');
+
+insert into ship_comp values('USPS', '02-432-1111');
+insert into ship_comp values('DELI', '03-123-2244');
+insert into ship_comp values('SERV', '01-203-2923');
+
+insert into shipping_info values ('901', '2022-06-02', '2022-06-03', 'USPS', '601', '501');
+insert into shipping_info values ('902', '2022-06-05', '2022-06-05', 'USPS', '601', '502');
+insert into shipping_info values ('903', '2022-06-04', '2022-06-04', 'USPS', '601', '503');
+insert into shipping_info values ('904', '2022-06-03', '2022-06-04', 'USPS', '602', '504');
+insert into shipping_info values ('905', '2022-05-30', '2022-06-01', 'USPS', '602', '505');
+insert into shipping_info values ('906', '2022-06-02', '2022-06-02', 'DELI', '602', '506');
+insert into shipping_info values ('907', '2022-06-05', '2022-06-05', 'DELI', '603', '507');
+insert into shipping_info values ('908', '2022-06-04', '2022-06-06', 'DELI', '603', '508');
+insert into shipping_info values ('909', '2022-06-03', '2022-06-03', 'DELI', '603', '509');
+insert into shipping_info values ('910', '2022-05-30', '2022-06-02', 'DELI', '604', '510');
+insert into shipping_info values ('911', '2022-06-01', '2022-06-02', 'SERV', '604', '511');
+insert into shipping_info values ('912', '2022-06-02', '2022-06-05', 'SERV', '604', '512');
+insert into shipping_info values ('913', '2022-06-06', '2022-06-06', 'SERV', '605', '513');
+insert into shipping_info values ('914', '2022-06-03', '2022-06-03', 'SERV', '605', '514');
+insert into shipping_info values ('915', '2022-06-02', '2022-06-02', 'SERV', '605', '515');
+
+insert into manufacturer values('101', 'Intel');
+insert into manufacturer values('102', 'Sony');
+insert into manufacturer values('103', 'Samsung');
+insert into manufacturer values('104', 'LG');
+insert into manufacturer values('105', 'NVIDIA');
+insert into manufacturer values('107', 'asus');
+insert into manufacturer values('108', 'lenovo');
+insert into manufacturer values('109', 'hp');
+insert into manufacturer values('110', 'apple');
+insert into manufacturer values('111', 'hansung');
+insert into manufacturer values('112', 'Logitech');
+insert into manufacturer values('113', 'razer');
+insert into manufacturer values('114', 'AMD');
+insert into manufacturer values('115 ', 'MSI');
+
+insert into store values('201', '501', 'California', '10', '103');
+insert into store values('201', '502', 'California', '0', '112');
+insert into store values('201', '503', 'California', '7', '112');
+insert into store values('202', '504', 'California', '0', '110');
+insert into store values('202', '505', 'California', '50', '114');
+insert into store values('202', '506', 'California', '101', '107');
+insert into store values('203', '507', 'California', '21', '108');
+insert into store values('203', '508', 'California', '210', '103');
+insert into store values('203', '509', 'California', '0', '103');
+insert into store values('204', '510', 'California', '12', '104');
+insert into store values('204', '511', 'California', '0', '102');
+insert into store values('204', '512', 'California', '0', '115');
+insert into store values('205', '513', 'Texas', '11', '114');
+insert into store values('205', '514', 'Texas', '310', '103');
+insert into store values('205', '515', 'Texas', '0', '101');
+
+insert into warehouse values('301', '501', 'California', '10', '103');
+insert into warehouse values('301', '502', 'California', '0', '112');
+insert into warehouse values('301', '503', 'California', '7', '112');
+insert into warehouse values('302', '504', 'California', '0', '110');
+insert into warehouse values('302', '505', 'California', '50', '114');
+insert into warehouse values('302', '506', 'California', '101', '107');
+insert into warehouse values('303', '507', 'California', '21', '108');
+insert into warehouse values('303', '508', 'California', '210', '103');
+insert into warehouse values('303', '509', 'California', '0', '103');
+insert into warehouse values('304', '510', 'California', '12', '104');
+insert into warehouse values('304', '511', 'California', '0', '102');
+insert into warehouse values('304', '512', 'California', '0', '115');
+insert into warehouse values('305', '513', 'Texas', '11', '114');
+insert into warehouse values('305', '514', 'Texas', '310', '103');
+insert into warehouse values('305', '515', 'Texas', '0', '101');
+
+insert into sales_info values('2022-04-01', '501', '12');
+insert into sales_info values('2021-04-02', '502', '3');
+insert into sales_info values('2022-04-03', '503', '4');
+insert into sales_info values('2021-04-04', '504', '11');
+insert into sales_info values('2022-04-05', '505', '13');
+insert into sales_info values('2021-04-06', '506', '15');
+insert into sales_info values('2022-04-07', '507', '17');
+insert into sales_info values('2021-04-08', '508', '13');
+insert into sales_info values('2022-04-09', '509', '15');
+insert into sales_info values('2021-04-10', '510', '17');
+insert into sales_info values('2022-04-11', '511', '12');
+insert into sales_info values('2021-04-12', '512', '13');
+insert into sales_info values('2022-04-13', '513', '10');
+insert into sales_info values('2021-04-14', '514', '11');
+insert into sales_info values('2022-04-15', '515', '19');
+insert into sales_info values('2022-04-16', '501', '2');
+insert into sales_info values('2021-04-17', '502', '3');
+insert into sales_info values('2022-04-18', '503', '10');
+insert into sales_info values('2021-04-19', '504', '11');
+insert into sales_info values('2022-04-20', '505', '13');
+insert into sales_info values('2021-04-21', '506', '5');
+insert into sales_info values('2022-04-22', '507', '17');
+insert into sales_info values('2021-04-23', '508', '6');
+insert into sales_info values('2022-04-24', '509', '3');
+insert into sales_info values('2021-04-25', '510', '1');
+insert into sales_info values('2022-04-26', '511', '3');
+insert into sales_info values('2021-04-27', '512', '13');
+insert into sales_info values('2022-04-28', '513', '3');
+insert into sales_info values('2021-04-29', '514', '11');
+insert into sales_info values('2022-04-30', '515', '5');
+
+insert into purchase values('2022-05-01', '601', '501', '12');
+insert into purchase values('2021-05-02', '602', '502', '3');
+insert into purchase values('2022-05-03', '603', '503', '4');
+insert into purchase values('2021-05-04', '604', '504', '11');
+insert into purchase values('2022-05-05', '605', '505', '13');
+insert into purchase values('2021-05-06', '606', '506', '15');
+insert into purchase values('2022-05-07', '607', '507', '17');
+insert into purchase values('2021-05-08', '608', '508', '13');
+insert into purchase values('2022-05-09', '609', '509', '15');
+insert into purchase values('2021-05-10', '610', '510', '17');
+insert into purchase values('2022-05-11', '611', '511', '12');
+insert into purchase values('2021-05-12', '612', '512', '13');
+insert into purchase values('2022-05-13', '613', '513', '10');
+insert into purchase values('2021-05-14', '614', '514', '11');
+insert into purchase values('2022-05-15', '615', '515', '19');
+insert into purchase values('2022-05-16', '601', '501', '2');
+insert into purchase values('2021-05-17', '602', '502', '3');
+insert into purchase values('2022-05-18', '603', '503', '10');
+insert into purchase values('2021-05-19', '604', '504', '11');
+insert into purchase values('2022-05-20', '605', '505', '13');
+insert into purchase values('2021-05-21', '606', '506', '5');
+insert into purchase values('2022-05-22', '607', '507', '17');
+insert into purchase values('2021-05-23', '608', '508', '6');
+insert into purchase values('2022-05-24', '609', '509', '3');
+insert into purchase values('2021-05-25', '610', '510', '1');
+insert into purchase values('2022-05-26', '611', '511', '3');
+insert into purchase values('2021-05-27', '612', '512', '13');
+insert into purchase values('2022-05-28', '613', '513', '3');
+insert into purchase values('2021-05-29', '614', '514', '11');
+insert into purchase values('2022-05-30', '615', '515', '5');

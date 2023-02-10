@@ -1,0 +1,19 @@
+delete from customer;
+delete from product;
+delete from ship_comp;
+delete from shipping_info;
+delete from manufacturer;
+delete from store;
+delete from warehouse;
+delete from sales_info;
+delete from purchase;
+
+drop table customer;
+drop table product;
+drop table ship_comp;
+drop table shipping_info;
+drop table manufacturer;
+drop table store;
+drop table warehouse;
+drop table sales_info;
+drop table purchase;
